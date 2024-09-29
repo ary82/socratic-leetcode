@@ -1,2 +1,5 @@
 main
 .env
+extension/chromium/socratic-code/node_modules
+extension/chromium/socratic-code/.svelte-kit
+extension/chromium/socratic-code/build
