@@ -12,5 +12,10 @@
 		"default_title": "Socratic Code",
 		"default_popup": "index.html"
 	},
-	"permissions": ["activeTab", "tabs", "scripting"]
+	"permissions": ["activeTab", "tabs", "scripting", "storage"],
+	"host_permissions": ["https://leetcode.com/*", "https://*.leetcode.com/*"],
+	"background": {
+		"service_worker": "service_worker.js",
+		"type": "module"
+	}
 }
