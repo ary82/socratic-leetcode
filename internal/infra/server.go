@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
@@ -37,24 +38,26 @@ func (s *Server) getSocraticQuestions(ctx *fiber.Ctx) error {
 
 	err := ctx.BodyParser(req)
 	if err != nil {
+		log.Println(err)
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"err": err.Error(),
 		})
 	}
 	err = req.Validate()
 	if err != nil {
+		log.Println(err)
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"err": err.Error(),
 		})
 	}
 
 	dynamicPrompt := fmt.Sprintf(PROMPT, req.Question, req.Lang, req.Lines, req.Code)
-	fmt.Println(dynamicPrompt)
 	res, err := s.TextModel.GenerateContent(
 		context.Background(),
 		genai.Text(dynamicPrompt),
 	)
 	if err != nil {
+		log.Println(err)
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": err.Error(),
 		})
@@ -63,6 +66,7 @@ func (s *Server) getSocraticQuestions(ctx *fiber.Ctx) error {
 	resJson := []TextGenerationResponse{}
 	err = json.Unmarshal([]byte(res.Candidates[0].Content.Parts[0].(genai.Text)), &resJson)
 	if err != nil {
+		log.Println(err)
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": err.Error(),
 		})

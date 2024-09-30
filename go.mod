@@ -1,4 +1,4 @@
-module github.com/ary82/sleetcode
+module github.com/ary82/socratic-leetcode
 
 go 1.23.1
 

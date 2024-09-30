@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/ary82/sleetcode/internal/infra"
+	"github.com/ary82/socratic-leetcode/internal/infra"
 	"github.com/joho/godotenv"
 )
 
