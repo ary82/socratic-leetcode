@@ -2,6 +2,7 @@ let problemText;
 let codeText;
 let langText;
 let questionText;
+let codeHtml;
 
 function sendData() {
 	chrome.runtime.sendMessage({
@@ -10,7 +11,8 @@ function sendData() {
 			problemText,
 			codeText,
 			langText,
-			questionText
+			questionText,
+			codeHtml
 		}
 	});
 }
@@ -26,6 +28,7 @@ const interval = setInterval(() => {
 		codeText = codeEle.innerText;
 		langText = langEle.innerText;
 		questionText = questionEle.href;
+		codeHtml = codeEle.innerHTML;
 		sendData();
 	}
 }, 500);
