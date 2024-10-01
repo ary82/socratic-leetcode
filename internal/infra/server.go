@@ -30,7 +30,7 @@ func (s *Server) registerRoutes() {
 	s.App.Use(logger.New())
 	s.App.Use(compress.New())
 
-	s.App.Get("/", s.getSocraticQuestions)
+	s.App.Post("/generate", s.getSocraticQuestions)
 }
 
 func (s *Server) getSocraticQuestions(ctx *fiber.Ctx) error {
@@ -51,7 +51,7 @@ func (s *Server) getSocraticQuestions(ctx *fiber.Ctx) error {
 		})
 	}
 
-	dynamicPrompt := fmt.Sprintf(PROMPT, req.Question, req.Lang, req.Lines, req.Code)
+	dynamicPrompt := fmt.Sprintf(PROMPT, req.Question, req.Lang, req.Loc, req.Code)
 	res, err := s.TextModel.GenerateContent(
 		context.Background(),
 		genai.Text(dynamicPrompt),

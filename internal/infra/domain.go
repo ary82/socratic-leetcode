@@ -4,7 +4,7 @@ import "fmt"
 
 type TextGenerationRequest struct {
 	Question string `json:"question"`
-	Lines    int    `json:"lines"`
+	Loc      int    `json:"loc"`
 	Lang     string `json:"lang"`
 	Code     string `json:"code"`
 }
@@ -18,7 +18,7 @@ func (req *TextGenerationRequest) Validate() error {
 	if req.Question == "" {
 		return fmt.Errorf("no question given")
 	}
-	if req.Lines == 0 {
+	if req.Loc == 0 {
 		return fmt.Errorf("0 lines solution not allowed")
 	}
 	if req.Lang == "" {
