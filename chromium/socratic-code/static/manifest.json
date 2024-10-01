@@ -12,8 +12,14 @@
 		"default_title": "Socratic Code",
 		"default_popup": "index.html"
 	},
-	"permissions": ["activeTab", "tabs", "scripting", "storage"],
-	"host_permissions": ["https://leetcode.com/*", "https://*.leetcode.com/*"],
+	"permissions": ["activeTab", "storage", "webRequest"],
+	"host_permissions": ["https://leetcode.com/*", "https://*.leetcode.com/*", "http://localhost/*"],
+	"content_scripts": [
+		{
+			"matches": ["https://leetcode.com/*", "https://*.leetcode.com/*"],
+			"js": ["content.js"]
+		}
+	],
 	"background": {
 		"service_worker": "service_worker.js",
 		"type": "module"
