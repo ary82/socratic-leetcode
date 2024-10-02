@@ -1,0 +1,43 @@
+name: build and release extension
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+      packages: write
+    strategy:
+      matrix:
+        node-version: [20]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+          cache-dependency-path: "chromium/socratic-code/pnpm-lock.yaml"
+      - name: Install dependencies
+        working-directory: ./chromium/socratic-code
+        run: pnpm install
+      - name: Build
+        working-directory: ./chromium/socratic-code
+        run: pnpm build
+      - name: Zip folder
+        working-directory: ./chromium/socratic-code
+        run: zip -r socratic-code.zip build
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: "v1.0.0"
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          files: ./chromium/socratic-code/socratic-code.zip

@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { PUBLIC_BACKEND_URL } from '$lib';
 	import { onMount } from 'svelte';
-	import { PUBLIC_BACKEND_URL } from '$env/static/public';
 
 	let content: string = '';
 
