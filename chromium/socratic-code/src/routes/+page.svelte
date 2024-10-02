@@ -12,7 +12,7 @@
 	let codeHTML: string;
 	let container: Element;
 
-	let insights: any = {};
+	let insights: { line: number; q: string }[] = [];
 
 	$: loc = code.split(/\r\n|\r|\n/).length;
 	$: if (codeHTML !== null) {
@@ -22,6 +22,14 @@
 		}
 	}
 	$: if (insights !== null) {
+		insights.forEach((insight: { line: number; q: string }) => {
+			container?.children[insight.line]?.classList.add(
+				'bg-info',
+				'text-info-content'
+				// 'tooltip'
+			);
+			// container?.children[insight.line]?.setAttribute('data-tip', insight.q);
+		});
 	}
 
 	const update = () => {
@@ -36,12 +44,19 @@
 					question = res.questionText;
 					code = res.codeText;
 					codeHTML = res.codeHtml;
+					console.log(codeHTML);
 				}
 			}
 		);
 	};
 
 	const getInsights = async () => {
+		const children = container.children;
+		for (let index = 0; index < children.length; index++) {
+			const child = children[index];
+			child.className = '';
+		}
+		insights = [];
 		const res = await fetch(`${PUBLIC_BACKEND_URL}/generate`, {
 			method: 'POST',
 			headers: {
@@ -74,14 +89,27 @@
 		**make sure only one leetcode tab is open for best performance
 	</p>
 
-	<h2 class="textarea-md font-bold text-center">URL: {question} -- LANG: {lang} -- LOC: {loc}</h2>
-	<div class="flex gap-2 p-1">
+	<h2 class="text-lg font-bold text-center">URL: {question} -- LANG: {lang} -- LOC: {loc}</h2>
+	<div class="flex gap-2 p-1 justify-center">
 		<button class="btn p-2" on:click={update}>Manually update question or input</button>
 		<button class="btn btn-primary p-2" on:click={getInsights}>Teach me!</button>
 	</div>
 	{#if codeHTML !== '' && codeHTML !== undefined}
-		<div style="white-space: pre-wrap;" class="mockup-code p-2 m-2">
-			<code bind:this={container}></code>
+		<h2 class="text-lg font-extrabold text-center m-2">Your Code</h2>
+		<div class="mockup-code p-2 m-2">
+			<code style="white-space: pre-wrap;" bind:this={container}></code>
+		</div>
+	{/if}
+	{#if insights.length !== 0}
+		<h2 class="text-lg font-extrabold text-center m-2">Insights</h2>
+		<div class="mockup-window bg-base-300">
+			<div class="bg-base-200 p-2">
+				{#each insights as i}
+					<div class="chat chat-start">
+						<div class="chat-bubble chat-bubble-primary">{i.q}</div>
+					</div>
+				{/each}
+			</div>
 		</div>
 	{/if}
 </div>

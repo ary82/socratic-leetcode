@@ -7,7 +7,9 @@
 
 <slot />
 
-<footer class="flex footer bg-neutral text-neutral-content items-center p-4 justify-between text-xs">
+<footer
+	class="flex footer bg-neutral text-neutral-content items-center p-4 justify-between text-xs"
+>
 	<aside class="grid-flow-col items-center">
 		<p>Copyright © {new Date().getFullYear()} - Aryan Goyal</p>
 	</aside>
