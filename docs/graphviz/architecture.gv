@@ -1,0 +1,46 @@
+digraph output_string {
+  bgcolor=transparent;
+  graph [fontsize=26 fontname="HackNerdFont" style=filled color=lightblue];
+  node [fontsize=26 fontname="HackNerdFont" style=filled color=white shape=box];
+  compound=true;
+  rankdir=LR;
+  label = "Architecture";
+
+  subgraph cluster_output {
+
+    subgraph cluster_byte2 {
+      label = "backend";
+      color = lightblue4;
+      subgraph cluster_char3 {
+        label = "Golang";
+        color = lightblue3;
+        API[label="gofiber API"]
+      }
+    }
+    subgraph cluster_byte3 {
+      label = "Google";
+      color = lightblue4;
+      subgraph cluster_char1 {
+        label = "LLM";
+        color = lightblue3;
+        "Google Gemini API"
+      }
+    }
+    subgraph cluster_byte1 {
+      label = "frontend";
+      color = lightblue4;
+      dummy[color=lightblue4 fontcolor=lightblue4]
+      subgraph cluster_char2 {
+        label = "chrome extension";
+        color = lightblue3;
+        "webpage(leetcode)"->"content script"[label="DOM Selector"]
+        "content script"->"bg script"[label="Chrome message API"]
+        "bg script"->"popup"[label="Chrome message API"]
+      }
+    }
+    API->"Google Gemini API"[label="TCP"]
+    "Google Gemini API"->API[label="TCP"]
+    "popup"->API[label="TCP"]
+    API->"popup"[label="TCP"]
+  }
+}
