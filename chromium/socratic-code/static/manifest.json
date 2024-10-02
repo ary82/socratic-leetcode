@@ -13,7 +13,11 @@
 		"default_popup": "index.html"
 	},
 	"permissions": ["activeTab", "storage", "webRequest"],
-	"host_permissions": ["https://leetcode.com/*", "https://*.leetcode.com/*", "http://localhost/*"],
+	"host_permissions": [
+		"https://leetcode.com/*",
+		"https://*.leetcode.com/*",
+		"https://socratic-leetcode-875479114962.asia-south1.run.app/*"
+	],
 	"content_scripts": [
 		{
 			"matches": ["https://leetcode.com/*", "https://*.leetcode.com/*"],
