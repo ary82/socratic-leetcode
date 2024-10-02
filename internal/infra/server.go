@@ -8,6 +8,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/favicon"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/google/generative-ai-go/genai"
 )
@@ -29,8 +30,10 @@ func NewServer(app *fiber.App, textModel *genai.GenerativeModel) *Server {
 func (s *Server) registerRoutes() {
 	s.App.Use(logger.New())
 	s.App.Use(compress.New())
+	s.App.Use(favicon.New())
 
 	s.App.Post("/generate", s.getSocraticQuestions)
+	s.App.Get("/", s.description)
 }
 
 func (s *Server) getSocraticQuestions(ctx *fiber.Ctx) error {
@@ -73,4 +76,10 @@ func (s *Server) getSocraticQuestions(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.Status(fiber.StatusOK).JSON(resJson)
+}
+
+func (s *Server) description(ctx *fiber.Ctx) error {
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"description": DESCRIPTION,
+	})
 }
