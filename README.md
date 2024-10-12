@@ -67,7 +67,7 @@ This was solved by identifying the correct elements and selecting them with `doc
 
 ### CI
 
-Due to my inexperience with Continuous Integration, it took me quite a lot to set it up.
+Due to my inexperience with Continuous Integration, it took me some time to set it up.
 
 This includes:
 
