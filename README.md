@@ -51,7 +51,6 @@ This teaching assistant will never tell the user the answer completely, as it is
 
 - Creating a problem database for easy identifification of the problem. This can be a simple KV with `problem name`->`problem description`
 - Creating a solution vector database for these problems, which can be used to give more context to the LLM and perform RAG(Retreival Augmented Generation)
-- After implementing RAG, a point based system for monetizing the extension can be developed. Eg. User tops up 5000 coins. 10 coins can generate, say, 2 insightful questions for the given problem
 
 ## Challenges
 
@@ -67,7 +66,7 @@ This was solved by identifying the correct elements and selecting them with `doc
 
 ### CI
 
-Due to my inexperience with Continuous Integration, it took me quite a lot to set it up.
+Due to my inexperience with Continuous Integration, it took me some time to set it up.
 
 This includes:
 
